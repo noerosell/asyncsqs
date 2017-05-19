@@ -27,13 +27,33 @@ $parameters = [
 ];
 
 $sqsClient = $sdk->createSqs();
+$counter=0;
 
 for ($index=0; $index < 100; $index++) {
     $sqsClient->receiveMessageAsync($parameters)
         ->then(
-            function (Result $messages) {
+            function (Result $messages) use ($counter) {
                 foreach ($messages->get('Messages') as $message) {
-                    print_r(json_decode($message['Body']));
+                    print_r('A'.$counter);
+                    $counter++;
+                }
+            })
+        ->otherwise(function ($rejected) {
+            print_r($rejected);
+        });
+
+    $loop->futureTick(function () use ($handler,$loop) {
+        \GuzzleHttp\Promise\queue()->run();
+    });
+}
+
+for ($index=0; $index < 100; $index++) {
+    $sqsClient->receiveMessageAsync($parameters)
+        ->then(
+            function (Result $messages) use ($counter) {
+                foreach ($messages->get('Messages') as $message) {
+                    print_r('B'.$counter);
+                    $counter++;
                 }
             })
         ->otherwise(function ($rejected) {
