@@ -1,0 +1,16 @@
+{
+    "name": "noerosell/asyncsqs",
+    "description": "trying to interact with sqs in a non-blocking mode",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Noe",
+            "email": "noe.rosell@letgo.com"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.28",
+        "wyrihaximus/react-guzzle-psr7": "^2.0",
+        "react/event-loop": "^0.4.3"
+    }
+}
